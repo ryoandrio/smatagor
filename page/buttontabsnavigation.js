@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {WebView} from 'react-native-webview';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import DataStudents from './smakotabogor.json';
+import DataSchools from './smakotabogor.json';
 // import {ScrollView} from 'react-native-gesture-handler';
 
 function PointScreen() {
@@ -43,8 +43,8 @@ function PolygonScreen() {
   );
 }
 
-function StudentsParse() {
-  return DataStudents.map(item => (
+function SchoolsParse() {
+  return DataSchools.map(item => (
     <TouchableOpacity
       onPress={() =>
         Linking.openURL(
@@ -57,7 +57,10 @@ function StudentsParse() {
           margin: 5,
           padding: 10,
         }}>
-        <FontAwesome5 name={item.fontawesome5icon} size={40} />
+        <FontAwesome5
+          name={item.status == 'Negeri' ? 'school' : 'chalkboard-teacher'}
+          size={40}
+        />
         <Text style={{fontWeight: 'bold', fontSize: 20}}>{item.nama}</Text>
         <Text>{item.status}</Text>
         <Text>
@@ -68,11 +71,11 @@ function StudentsParse() {
   ));
 }
 
-function StudentsScreen() {
+function SchoolsScreen() {
   return (
     <ScrollView>
       <View style={{width: '100%', height: '100%'}}>
-        <StudentsParse />
+        <SchoolsParse />
       </View>
     </ScrollView>
   );
@@ -95,7 +98,7 @@ export default function App() {
               iconName = focused ? 'wave-square' : 'wave-square';
             } else if (route.name === 'Polygon') {
               iconName = focused ? 'draw-polygon' : 'draw-polygon';
-            } else if (route.name === 'Students') {
+            } else if (route.name === 'Sekolah') {
               iconName = focused ? 'users' : 'users';
             }
 
@@ -109,19 +112,23 @@ export default function App() {
         <Tab.Screen
           name="Point"
           component={PointScreen}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
         <Tab.Screen
           name="Line"
           component={LineScreen}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
         <Tab.Screen
           name="Polygon"
           component={PolygonScreen}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
-        <Tab.Screen name="Students" component={StudentsScreen} />
+        <Tab.Screen
+          name="Sekolah"
+          component={SchoolsScreen}
+          options={{headerShown: true}}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
