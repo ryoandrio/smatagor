@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, View, Linking, ScrollView} from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Linking,
+  ScrollView,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {WebView} from 'react-native-webview';
@@ -19,26 +27,27 @@ function PointScreen() {
   );
 }
 
-function LineScreen() {
+function InfoScreen() {
   return (
-    <View style={{width: '100%', height: '100%'}}>
-      <WebView
-        source={{
-          uri: 'https://ryoandrio.github.io/pgpbl-acara10/line.html',
+    <View
+      style={{
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <Image
+        source={require('./images/KotaBogor.png')}
+        style={{
+          width: 150,
+          height: 150,
         }}
       />
-    </View>
-  );
-}
-
-function PolygonScreen() {
-  return (
-    <View style={{width: '100%', height: '100%'}}>
-      <WebView
-        source={{
-          uri: 'https://ryoandrio.github.io/pgpbl-acara10/polygon.html',
-        }}
-      />
+      <Text style={style.title}>Informasi</Text>
+      <Text style={style.subtitle}>
+        Aplikasi ini menampilkan peta berisi titik SMA di Kota Bogor serta
+        daftar dari seluruh sekolah tersebut.
+      </Text>
     </View>
   );
 }
@@ -81,6 +90,18 @@ function SchoolsScreen() {
   );
 }
 
+const style = StyleSheet.create({
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  subtitle: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+});
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -94,10 +115,8 @@ export default function App() {
             // FontAwesome5
             if (route.name === 'Point') {
               iconName = focused ? 'map-marker-alt' : 'map-marker-alt';
-            } else if (route.name === 'Line') {
-              iconName = focused ? 'wave-square' : 'wave-square';
-            } else if (route.name === 'Polygon') {
-              iconName = focused ? 'draw-polygon' : 'draw-polygon';
+            } else if (route.name === 'Info') {
+              iconName = focused ? 'info-circle' : 'info-circle';
             } else if (route.name === 'Sekolah') {
               iconName = focused ? 'users' : 'users';
             }
@@ -115,18 +134,13 @@ export default function App() {
           options={{headerShown: true}}
         />
         <Tab.Screen
-          name="Line"
-          component={LineScreen}
-          options={{headerShown: true}}
-        />
-        <Tab.Screen
-          name="Polygon"
-          component={PolygonScreen}
-          options={{headerShown: true}}
-        />
-        <Tab.Screen
           name="Sekolah"
           component={SchoolsScreen}
+          options={{headerShown: true}}
+        />
+        <Tab.Screen
+          name="Info"
+          component={InfoScreen}
           options={{headerShown: true}}
         />
       </Tab.Navigator>
